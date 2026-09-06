@@ -2,8 +2,8 @@
 // Put only PUBLIC browser configuration here. Never put database admin credentials,
 // service-account JSON, private API secrets, signing keys, or other privileged secrets here.
 export const CONFIG = Object.freeze({
-  APP_NAME: "API Key Manager",
-  ADMIN_GATE_SECRET: "", // Optional client-side gate. Not a security boundary.
+  APP_NAME: "SEVER KEY NGUYENCUONG",
+  ADMIN_GATE_SECRET: "nguyencuongios", // Optional client-side gate. Not a security boundary.
   API_BASE_URL: "",       // Example: https://api.example.com/api — leave empty to use Firebase adapter.
   firebase: {
     apiKey: "",
