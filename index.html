@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b0f19">
+<title>API Key Manager — Admin Access</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="gate-page">
+<main class="gate">
+  <section class="gate-card">
+    <div class="brand-mark">K</div>
+    <p class="eyebrow">ADMIN CONSOLE</p>
+    <h1>API Key Manager</h1>
+    <p class="muted">Secure administrative access to your key, device and license control plane.</p>
+    <form id="adminGateForm" novalidate>
+      <label for="adminSecret">Admin Secret</label>
+      <input id="adminSecret" name="adminSecret" type="password" autocomplete="current-password" placeholder="Enter admin secret" required>
+      <button class="btn primary full" type="submit">Unlock Dashboard</button>
+    </form>
+    <div id="gateError" class="alert error hidden" role="alert"></div>
+    <p class="fine">This client-side gate is not a security boundary. Protect write operations at your API/database layer.</p>
+  </section>
+</main>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+{
+  "keys": {
+    "id": "generated",
+    "key": "string",
+    "status": "Unused|Active|Expired|Disabled|Banned|Revoked",
+    "package": "string",
+    "tweak": "string",
+    "deviceId": "string|null",
+    "maxDevices": "number",
+    "createdAt": "ISO-8601",
+    "expiresAt": "ISO-8601|lifetime",
+    "lastUsedAt": "ISO-8601|null",
+    "note": "string"
+  },
+  "devices": {
+    "id": "generated",
+    "deviceId": "string",
+    "deviceHash": "string",
+    "model": "string",
+    "iosVersion": "string",
+    "appVersion": "string",
+    "tweakVersion": "string",
+    "ip": "string",
+    "firstSeen": "ISO-8601",
+    "lastSeen": "ISO-8601",
+    "status": "Active|Banned"
+  },
+  "packages": {
+    "id": "generated",
+    "packageId": "string",
+    "name": "string",
+    "version": "string",
+    "minVersion": "string",
+    "maxVersion": "string",
+    "status": "Enabled|Disabled",
+    "description": "string"
+  },
+  "tweaks": {
+    "id": "generated",
+    "name": "string",
+    "identifier": "string",
+    "package": "string",
+    "version": "string",
+    "minIOS": "string",
+    "maxIOS": "string",
+    "status": "Enabled|Disabled",
+    "description": "string"
+  },
+  "blacklist": {
+    "id": "generated",
+    "target": "string",
+    "reason": "string",
+    "createdAt": "ISO-8601",
+    "expiresAt": "ISO-8601|null",
+    "status": "Banned|Active"
+  },
+  "logs": {
+    "id": "generated",
+    "time": "ISO-8601",
+    "action": "string",
+    "key": "string",
+    "deviceId": "string",
+    "ip": "string",
+    "package": "string",
+    "result": "string"
+  },
+  "settings/global": {
+    "siteName": "string",
+    "apiUrl": "string",
+    "expirationDays": "number",
+    "maxDevices": "number",
+    "offlineGraceMinutes": "number",
+    "maintenance": "boolean"
+  }
+}
