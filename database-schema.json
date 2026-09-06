@@ -10,7 +10,12 @@
     "createdAt": "ISO-8601",
     "expiresAt": "ISO-8601|lifetime",
     "lastUsedAt": "ISO-8601|null",
-    "note": "string"
+    "note": "string",
+    "keyName": "string",
+    "packageName": "string",
+    "packageToken": "string",
+    "bannedAt": "ISO-8601|null",
+    "updatedAt": "ISO-8601|null"
   },
   "devices": {
     "id": "generated",
@@ -33,7 +38,9 @@
     "minVersion": "string",
     "maxVersion": "string",
     "status": "Enabled|Disabled",
-    "description": "string"
+    "description": "string",
+    "token": "string",
+    "tokenUpdatedAt": "ISO-8601|null"
   },
   "tweaks": {
     "id": "generated",

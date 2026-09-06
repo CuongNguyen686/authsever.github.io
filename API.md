@@ -43,6 +43,7 @@ Request:
   "key": "AUTH-...",
   "device_id": "...",
   "package": "com.example.tweak",
+  "package_token": "PKG-...",
   "version": "1.0.0"
 }
 ```
