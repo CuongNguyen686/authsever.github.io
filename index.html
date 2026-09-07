@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0b0f19">
-<title>API Key Manager — Admin Access</title>
+<title>Quản lý khóa API — Quyền quản trị</title>
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/responsive.css">
 </head>
@@ -12,16 +12,16 @@
 <main class="gate">
   <section class="gate-card">
     <div class="brand-mark">K</div>
-    <p class="eyebrow">ADMIN CONSOLE</p>
-    <h1>API Key Manager</h1>
-    <p class="muted">Secure administrative access to your key, device and license control plane.</p>
+    <p class="eyebrow">BẢNG QUẢN TRỊ</p>
+    <h1>Quản lý khóa API</h1>
+    <p class="muted">Quản lý an toàn khóa, thiết bị và giấy phép của bạn.</p>
     <form id="adminGateForm" novalidate>
-      <label for="adminSecret">Admin Secret</label>
-      <input id="adminSecret" name="adminSecret" type="password" autocomplete="current-password" placeholder="Enter admin secret" required>
-      <button class="btn primary full" type="submit">Unlock Dashboard</button>
+      <label for="adminSecret">Mật khẩu quản trị</label>
+      <input id="adminSecret" name="adminSecret" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu quản trị" required>
+      <button class="btn primary full" type="submit">Mở bảng điều khiển</button>
     </form>
     <div id="gateError" class="alert error hidden" role="alert"></div>
-    <p class="fine">This client-side gate is not a security boundary. Protect write operations at your API/database layer.</p>
+    <p class="fine">Lớp khóa phía client không phải biện pháp bảo mật tuyệt đối. Hãy bảo vệ quyền ghi tại Firebase Rules/backend.</p>
   </section>
 </main>
 <script type="module" src="js/app.js"></script>

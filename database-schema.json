@@ -10,12 +10,7 @@
     "createdAt": "ISO-8601",
     "expiresAt": "ISO-8601|lifetime",
     "lastUsedAt": "ISO-8601|null",
-    "note": "string",
-    "keyName": "string",
-    "packageName": "string",
-    "packageToken": "string",
-    "bannedAt": "ISO-8601|null",
-    "updatedAt": "ISO-8601|null"
+    "note": "string"
   },
   "devices": {
     "id": "generated",
@@ -38,9 +33,7 @@
     "minVersion": "string",
     "maxVersion": "string",
     "status": "Enabled|Disabled",
-    "description": "string",
-    "token": "string",
-    "tokenUpdatedAt": "ISO-8601|null"
+    "description": "string"
   },
   "tweaks": {
     "id": "generated",
@@ -78,5 +71,27 @@
     "maxDevices": "number",
     "offlineGraceMinutes": "number",
     "maintenance": "boolean"
+  },
+  "_sync": {
+    "source": "Firebase Realtime Database",
+    "databaseURL": "https://sever-key-ngcuong-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "webRealtime": true,
+    "theosReadPath": "/keys",
+    "packageTokenPath": "/packages/{packageId}/token",
+    "theosDevicePath": "/keyDevices/{keyId}/{deviceHash}",
+    "webDeviceMirror": "/devices/{deviceHash}"
+  },
+  "keyDevices": {
+    "{keyId}": "{deviceHash}: device registration for this key",
+    "{keyId}/{deviceHash}": {
+      "deviceId": "SHA-256",
+      "deviceHash": "SHA-256",
+      "keyId": "string",
+      "package": "string",
+      "appVersion": "string",
+      "firstSeen": "ISO-8601",
+      "lastSeen": "ISO-8601",
+      "status": "Active|Banned"
+    }
   }
 }

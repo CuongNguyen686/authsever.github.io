@@ -43,7 +43,6 @@ Request:
   "key": "AUTH-...",
   "device_id": "...",
   "package": "com.example.tweak",
-  "package_token": "PKG-...",
   "version": "1.0.0"
 }
 ```
@@ -63,6 +62,12 @@ Same request shape. The server binds a valid key to a permitted device according
 ### POST /auth/heartbeat
 
 Same identity fields plus optional app/tweak metadata. The server updates `lastUsedAt` and device presence.
+
+The bundled `theos/APIClient` (Firebase adapter) implements this as `sendHeartbeatForDeviceID:package:version:completion:` — it patches `lastSeen`/`lastUsedAt` for the already-registered key/device without re-running the full package/device-limit/blacklist check. If you build a real REST backend per this contract instead of using Firebase directly, implement `/auth/heartbeat` server-side the same way.
+
+### Blacklist enforcement
+
+The dashboard's "Danh sách chặn" (blacklist) page lets an admin ban a `key`, a device hash, or an IP. When using the Firebase adapter, `theos/APIClient` now checks `/blacklist` for both the submitted key and the computed device hash before returning `valid` — a matching, non-expired entry returns `banned`. IP-based blacklist entries are **not** enforced client-side (a client can't reliably assert its own public IP); enforce those at your backend/CDN/reverse proxy if you build a real REST API.
 
 ## Security
 

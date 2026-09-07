@@ -1,0 +1,39 @@
+{
+  "rules": {
+    "keys": {
+      ".indexOn": ["key"],
+      ".read": true,
+      ".write": "auth != null"
+    },
+    "packages": {
+      ".indexOn": ["packageId"],
+      ".read": true,
+      ".write": "auth != null"
+    },
+    "devices": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+    "keyDevices": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+    "tweaks": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+    "blacklist": {
+      ".indexOn": ["target"],
+      ".read": true,
+      ".write": "auth != null"
+    },
+    "logs": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "settings": {
+      ".read": true,
+      ".write": "auth != null"
+    }
+  }
+}

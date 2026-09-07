@@ -1,0 +1,15 @@
+{
+  "rules": {
+    ".read": true,
+    ".write": true,
+    "keys": {
+      ".indexOn": ["key"]
+    },
+    "packages": {
+      ".indexOn": ["packageId"]
+    },
+    "blacklist": {
+      ".indexOn": ["target"]
+    }
+  }
+}

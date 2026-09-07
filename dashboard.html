@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0b0f19">
-<title>API Key Manager</title>
+<title>Quản lý khóa API</title>
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/dashboard.css">
 <link rel="stylesheet" href="css/responsive.css">
@@ -14,14 +14,14 @@
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-brand"><span class="brand-mark small">K</span><span>Key Manager</span></div>
     <nav id="mainNav" class="nav"></nav>
-    <div class="sidebar-footer"><button id="logoutBtn" class="nav-item danger">↪ <span>Logout</span></button></div>
+    <div class="sidebar-footer"><button id="logoutBtn" class="nav-item danger">↪ <span>Đăng xuất</span></button></div>
   </aside>
   <div id="drawerBackdrop" class="drawer-backdrop"></div>
   <section class="main-shell">
     <header class="topbar">
       <button id="menuBtn" class="icon-btn mobile-only" aria-label="Open menu">☰</button>
-      <div class="top-search"><span>⌕</span><input id="globalSearch" placeholder="Search keys, devices, packages…"></div>
-      <div class="top-actions"><button id="refreshBtn" class="icon-btn" title="Refresh">↻</button><span id="dbStatus" class="status-pill">Connecting…</span><span class="admin-badge">ADMIN</span></div>
+      <div class="top-search"><span>⌕</span><input id="globalSearch" placeholder="Tìm kiếm khóa, thiết bị, gói…"></div>
+      <div class="top-actions"><button id="refreshBtn" class="icon-btn" title="Làm mới">↻</button><span id="dbStatus" class="status-pill">Đang kết nối…</span><span class="admin-badge">QUẢN TRỊ</span></div>
     </header>
     <main id="view" class="content"></main>
   </section>
@@ -29,7 +29,6 @@
 <div id="modalRoot"></div>
 <div id="toastRoot" class="toast-root"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script type="module" src="js/dashboard.js"></script>
 </body>
 </html>
