@@ -7,7 +7,7 @@ export const CONFIG = Object.freeze({
   API_BASE_URL: "",       // Example: https://api.example.com/api — leave empty to use Firebase adapter.
   firebase: {
     apiKey: "AIzaSyBoYPFC49bqhIVlOC4Qg5cASNj-z4yQTHM",
-    authDomain: "http://sever-key-ngcuong.firebaseapp.com",
+    authDomain: "sever-key-ngcuong.firebaseapp.com",
     databaseURL: "https://sever-key-ngcuong-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "sever-key-ngcuong",
     storageBucket: "sever-key-ngcuong.firebasestorage.app",
