@@ -19,9 +19,9 @@ async function getPackages(){
 function packageOptions(packages, selected=""){
   return `<option value="">— Chọn package —</option>`+
     packages.map(p=>{
-      const id=p.packageId||p.id||"";
-      const label=p.name?`${p.name} (${id})`:id;
-      return `<option value="${esc(id)}" ${selected===id?"selected":""} data-name="${esc(p.name||"")}" data-token="${esc(p.token||"")}">${esc(label)}</option>`;
+      const token=p.token||"";
+      const label=p.name?`${p.name} (${token})`:token;
+      return `<option value="${esc(token)}" ${selected===token?"selected":""} data-name="${esc(p.name||"")}" data-token="${esc(token)}">${esc(label)}</option>`;
     }).join("");
 }
 
@@ -86,75 +86,35 @@ async function gen(v){
   async root=>{
     const f=new FormData(root.querySelector("#keyForm"));
     const qty=Number(f.get("quantity")); const now=new Date();
-    const packageId=f.get("package");
-    const pkg=packages.find(p=>(p.packageId||p.id)===packageId)||{};
-    const packageName=f.get("keyName")||pkg.name||packageId;
+    const packageToken=String(f.get("package")||"").trim();
+    const pkg=packages.find(p=>String(p.token||"")===packageToken)||{};
+    if(!packageToken) { toast("Package chưa có token"); return; }
+    const packageName=f.get("keyName")||pkg.name||packageToken;
     const exp=f.get("expiration")==="lifetime"?"lifetime":new Date(now.getTime()+Number(f.get("expiration"))*86400000).toISOString();
     for(let i=0;i<qty;i++) await store.create("keys",{
       key:randomKey(f.get("prefix"),Number(f.get("length"))),
-      keyName:packageName,status:"Unused",package:packageId,packageName:pkg.name||packageName,
-      packageToken:pkg.token||"",tweak:f.get("tweak"),note:f.get("note"),maxDevices:Number(f.get("maxDevices")),
+      keyName:packageName,status:"Unused",package:packageToken,packageName:pkg.name||packageName,
+      packageToken:packageToken,tweak:f.get("tweak"),note:f.get("note"),maxDevices:Number(f.get("maxDevices")),
       createdAt:now.toISOString(),expiresAt:exp
     });
     toast(`Đã tạo ${qty} khóa`); renderKeys(v);
   });
 }
 
-async function getBoundDevices(keyId){
-  let rows;
-  try{ rows=await store.list(`keyDevices/${keyId}`); }catch{ rows=[]; }
-  return Array.isArray(rows)?rows:[];
-}
-
-function deviceStatusBadge(s){
-  const v=String(s||"Active");
-  return `<span class="badge ${v.toLowerCase()==="banned"?"banned":"active"}">${esc(v)}</span>`;
-}
-
 function edit(v,x){
-  Promise.all([getPackages(), getBoundDevices(x.id)]).then(([packages, devices])=>{
-    const maxDevices=x.maxDevices||1;
-    const deviceRows=devices.length
-      ? devices.map(d=>`<tr>
-        <td><code>${esc(d.deviceHash||d.id)}</code></td>
-        <td>${esc(d.package||"—")}</td>
-        <td>${esc(d.appVersion||"—")}</td>
-        <td>${fmtDate(d.firstSeen)}</td>
-        <td>${fmtDate(d.lastSeen)}</td>
-        <td>${deviceStatusBadge(d.status)}</td>
-        <td><button type="button" class="btn danger" data-unbind="${esc(d.id)}">Gỡ</button></td>
-        </tr>`).join("")
-      : `<tr><td colspan="7"><div class="empty">Chưa có thiết bị nào dùng key này.</div></td></tr>`;
-
-    const root=modal("Sửa khóa",`<form id="editForm" class="form-grid">
+  getPackages().then(packages=>modal("Sửa khóa",`<form id="editForm" class="form-grid">
   <div class="field"><label>Trạng thái</label><select name="status">${statuses.map(s=>`<option ${x.status===s?"selected":""}>${s}</option>`).join("")}</select></div>
   <div class="field"><label>Tên khóa</label><input name="keyName" value="${esc(x.keyName||"")}"></div>
-  <div class="field"><label>Số thiết bị tối đa</label><input name="maxDevices" type="number" min="1" value="${maxDevices}"></div>
+  <div class="field"><label>Số thiết bị tối đa</label><input name="maxDevices" type="number" min="1" value="${x.maxDevices||1}"></div>
   <div class="field"><label>Package</label><select name="package">${packageOptions(packages,x.package||"")}</select></div>
   <div class="field"><label>Tweak</label><input name="tweak" value="${esc(x.tweak||"")}"></div>
-  <div class="field wide"><label>Ghi chú</label><textarea name="note">${esc(x.note||"")}</textarea></div>
-  <div class="field wide">
-    <label>Thiết bị đã dùng key này (${devices.length}/${maxDevices})</label>
-    <div class="table-wrap"><table class="data-table">
-      <thead><tr><th>Hash thiết bị</th><th>Package</th><th>Version</th><th>Lần đầu</th><th>Lần cuối</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
-      <tbody>${deviceRows}</tbody>
-    </table></div>
-  </div>
-  </form>`,
-    async root=>{
-      const f=new FormData(root.querySelector("#editForm"));
-      const packageId=f.get("package"); const pkg=packages.find(p=>(p.packageId||p.id)===packageId)||{};
-      await store.update("keys",x.id,{status:f.get("status"),keyName:f.get("keyName"),maxDevices:Number(f.get("maxDevices")),
-        package:packageId,packageName:pkg.name||packageId,packageToken:pkg.token||"",tweak:f.get("tweak"),note:f.get("note"),updatedAt:new Date().toISOString()});
-      toast("Đã cập nhật khóa"); renderKeys(v);
-    });
-
-    root.querySelectorAll("[data-unbind]").forEach(b=>b.onclick=async()=>{
-      if(await confirmAction("Gỡ thiết bị","Gỡ thiết bị này khỏi key? Thiết bị sẽ có thể kích hoạt lại key ở một thiết bị khác (nếu còn slot).")){
-        await store.remove("keyDevices",`${x.id}/${b.dataset.unbind}`);
-        toast("Đã gỡ thiết bị khỏi key");
-        edit(v,x);
-      }
-    });
-  });
+  <div class="field wide"><label>Ghi chú</label><textarea name="note">${esc(x.note||"")}</textarea></div></form>`,
+  async root=>{
+    const f=new FormData(root.querySelector("#editForm"));
+    const packageToken=String(f.get("package")||"").trim(); const pkg=packages.find(p=>String(p.token||"")===packageToken)||{};
+    if(!packageToken) { toast("Package chưa có token"); return; }
+    await store.update("keys",x.id,{status:f.get("status"),keyName:f.get("keyName"),maxDevices:Number(f.get("maxDevices")),
+      package:packageToken,packageName:pkg.name||packageToken,packageToken:packageToken,tweak:f.get("tweak"),note:f.get("note"),updatedAt:new Date().toISOString()});
+    toast("Đã cập nhật khóa"); renderKeys(v);
+  }));
 }
