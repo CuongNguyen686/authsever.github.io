@@ -1,15 +1,9 @@
 {
   "rules": {
-    ".read": true,
-    ".write": true,
-    "keys": {
-      ".indexOn": ["key"]
-    },
     "packages": {
-      ".indexOn": ["packageId"]
+      ".indexOn": ["token"]
     },
-    "blacklist": {
-      ".indexOn": ["target"]
-    }
+    ".read": true,
+    ".write": true
   }
 }
