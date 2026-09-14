@@ -20,7 +20,21 @@ $("#drawerBackdrop").onclick=()=>{$("#sidebar").classList.remove("open");$("#dra
 $$(".nav-item",nav).forEach(b=>b.onclick=()=>go(b.dataset.route));
 $("#refreshBtn").onclick=()=>go(location.hash.slice(1)||"dashboard");
 const dbStatus=$("#dbStatus");
-async function health(){try{await store.health();dbStatus.textContent="Firebase đã kết nối";dbStatus.className="status-pill"}catch(e){dbStatus.textContent="Kết nối thất bại";dbStatus.className="status-pill bad";toast(e.message,"error")}}
+dbStatus.onclick=health;
+async function health(){
+  try {
+    const result=await store.health();
+    dbStatus.textContent="Firebase đã kết nối";
+    dbStatus.className="status-pill";
+    dbStatus.title=result?.databaseURL||"Firebase";
+  } catch(e) {
+    const msg=String(e?.message||e||"Lỗi không xác định");
+    dbStatus.textContent=msg.length>34?"Firebase lỗi":"Kết nối thất bại";
+    dbStatus.className="status-pill bad";
+    dbStatus.title=msg;
+    toast(msg,"error");
+  }
+}
 async function go(route){route=routes[route]?route:"dashboard";location.hash=route;$$(".nav-item",nav).forEach(b=>b.classList.toggle("active",b.dataset.route===route));$("#sidebar").classList.remove("open");$("#drawerBackdrop").classList.remove("open");const v=$("#view");v.innerHTML='<div class="loading">Đang tải…</div>';try{await routes[route][1](v)}catch(e){v.innerHTML=`<div class="alert error"><strong>Không thể tải trang này.</strong><br>${esc(e.message)}<br><button class="btn" id="retry">Thử lại</button></div>`;$("#retry").onclick=()=>go(route)}}
 function renderDocs(v){v.innerHTML=`<div class="page-head"><div><h1>Tài liệu API</h1><p class="muted">Tài liệu REST cho máy chủ API bên ngoài.</p></div></div><div class="section-card doc"><h3>Xác thực</h3><p>Bảo vệ quyền quản trị ở phía máy chủ. Không đặt bí mật riêng tư vào frontend tĩnh.</p><h3>Luồng xác thực Firebase</h3><div class="code">Theos → Firebase /keys
 Theos → Firebase /packages
