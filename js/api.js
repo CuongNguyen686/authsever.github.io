@@ -120,7 +120,7 @@ export const store = {
   health: async () => {
     if (CONFIG.API_BASE_URL.trim()) return apiFetch("health");
     // Test the exact Firebase collection the dashboard needs, not the root.
-    await firebaseREST("GET", "packages?shallow=true");
+    await firebaseREST("GET", "packages");
     return { ok: true, mode: "firebase-rest", databaseURL: firebaseBase() };
   },
 
