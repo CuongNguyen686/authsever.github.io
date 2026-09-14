@@ -58,13 +58,13 @@ async function firebaseREST(method, path, payload) {
 
 async function firebaseSDKInit() {
   if (database) return database;
-  if (!CONFIG.firebase?.apiKey || !firebaseBase()) throw new Error("Firebase chưa được cấu hình.");
+  if (!firebaseBase()) throw new Error("Firebase chưa được cấu hình.");
   try {
     const [appMod, dbMod] = await Promise.all([
       import("https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"),
       import("https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js")
     ]);
-    app = appMod.getApps().length ? appMod.getApps()[0] : appMod.initializeApp(CONFIG.firebase);
+    app = appMod.getApps().length ? appMod.getApps()[0] : appMod.initializeApp({ databaseURL: firebaseBase() });
     database = dbMod.getDatabase(app);
     fns = dbMod;
     return database;
