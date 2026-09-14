@@ -75,7 +75,7 @@
   },
   "_sync": {
     "source": "Firebase Realtime Database",
-    "databaseURL": "https://sever-key-ngcuong-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "databaseURL": "https://authsever-91133-default-rtdb.asia-southeast1.firebasedatabase.app",
     "webRealtime": true,
     "theosReadPath": "/keys",
     "packageTokenPath": "/packages/{token}",
